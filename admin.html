@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SleemTV Admin Panel</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .admin-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="file"],
+        input[type="password"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <form id="admin-form" onsubmit="return false;">
+            <div class="form-group">
+                <label for="admin-password">Password:</label>
+                <input type="password" id="admin-password" required>
+            </div>
+            <div class="form-group">
+                <label for="video-file">Select Video:</label>
+                <input type="file" id="video-file" accept="video/*" required>
+            </div>
+            <div class="form-group">
+                <label for="repeat-video">Repeat Video:</label>
+                <input type="checkbox" id="repeat-video">
+            </div>
+            <button type="submit">Play Video</button>
+        </form>
+    </div>
+
+    <script>
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        const correctPasswordHash = '2ffccddf6a44ef4c84115528a9ef95e4fa47c18738e9112cdca7d4e445e547b0'; // SHA-256 hash of "Sleem6640!"
+
+        document.getElementById('admin-form').addEventListener('submit', async function() {
+            const password = document.getElementById('admin-password').value;
+            const videoFile = document.getElementById('video-file').files[0];
+            const repeat = document.getElementById('repeat-video').checked;
+
+            const passwordHash = await sha256(password);
+            if (passwordHash !== correctPasswordHash) {
+                alert('Incorrect password');
+                return;
+            }
+
+            if (videoFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const videoSrc = e.target.result;
+                    localStorage.setItem('videoSrc', videoSrc);
+                    localStorage.setItem('repeat', repeat);
+                    alert('Video updated');
+                };
+                reader.readAsDataURL(videoFile);
+            }
+        });
+    </script>
+</body>
+</html>
