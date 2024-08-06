@@ -56,23 +56,14 @@
     </div>
 
     <script>
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            return hashHex;
-        }
+        const correctPassword = 'Sleem6640!';
 
-        const correctPasswordHash = '2ffccddf6a44ef4c84115528a9ef95e4fa47c18738e9112cdca7d4e445e547b0'; // SHA-256 hash of "Sleem6640!"
-
-        document.getElementById('admin-form').addEventListener('submit', async function() {
+        document.getElementById('admin-form').addEventListener('submit', function() {
             const password = document.getElementById('admin-password').value;
             const videoFile = document.getElementById('video-file').files[0];
             const repeat = document.getElementById('repeat-video').checked;
 
-            const passwordHash = await sha256(password);
-            if (passwordHash !== correctPasswordHash) {
+            if (password !== correctPassword) {
                 alert('Incorrect password');
                 return;
             }
