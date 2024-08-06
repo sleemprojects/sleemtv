@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SleemTV Online</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #video-container {
+            width: 80%;
+            max-width: 800px;
+        }
+        video {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <video id="sleemtv-video" controls>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <script>
+        window.onload = function() {
+            const videoElement = document.getElementById('sleemtv-video');
+            const videoSrc = localStorage.getItem('videoSrc');
+            const repeat = localStorage.getItem('repeat') === 'true';
+
+            if (videoSrc) {
+                videoElement.src = videoSrc;
+            }
+
+            videoElement.loop = repeat;
+        };
+    </script>
+</body>
+</html>
