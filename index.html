@@ -20,6 +20,17 @@
         video {
             width: 100%;
             height: auto;
+            -webkit-appearance: none;
+        }
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .time-display {
+            font-size: 16px;
+            font-family: Arial, sans-serif;
         }
     </style>
 </head>
@@ -29,10 +40,14 @@
             <source src="video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <div class="video-controls">
+            <div class="time-display" id="time-display">00:00</div>
+        </div>
     </div>
     <script>
         window.onload = function() {
             const videoElement = document.getElementById('sleemtv-video');
+            const timeDisplay = document.getElementById('time-display');
             const videoSrc = localStorage.getItem('videoSrc');
             const repeat = localStorage.getItem('repeat') === 'true';
 
@@ -41,6 +56,28 @@
             }
 
             videoElement.loop = repeat;
+
+            // Update the time display to always show 00:00
+            videoElement.ontimeupdate = function() {
+                timeDisplay.innerText = '00:00';
+            };
+
+            // Disable the pause functionality
+            videoElement.addEventListener('pause', function() {
+                videoElement.play();
+            });
+
+            // Hide the default controls
+            videoElement.controls = false;
+
+            // Custom play button
+            const playButton = document.createElement('button');
+            playButton.innerText = 'Play';
+            playButton.style.display = 'none'; // Hidden to simulate no pause button
+            document.querySelector('.video-controls').appendChild(playButton);
+
+            // Simulate auto play
+            videoElement.play();
         };
     </script>
 </body>
