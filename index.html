@@ -26,43 +26,27 @@
 <body>
     <div id="video-container">
         <video id="sleemtv-video" controls>
+            <source src="https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8" type="application/x-mpegURL">
             Your browser does not support the video tag.
         </video>
     </div>
     <script>
         window.onload = function() {
             const videoElement = document.getElementById('sleemtv-video');
-            const videoSrc = localStorage.getItem('videoSrc');
+            const videoSrc = localStorage.getItem('videoSrc') || 'https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8';
             const repeat = localStorage.getItem('repeat') === 'true';
 
-            if (videoSrc) {
-                videoElement.src = videoSrc;
-                videoElement.load();  // Ensure the video is reloaded
-            }
-
-            videoElement.loop = repeat;
-        };
-    </script>
-</body>
-</html>
-    <div id="video-container">
-        <video id="sleemtv-video" controls>
-            <source src="video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    <script>
-        window.onload = function() {
-            const videoElement = document.getElementById('sleemtv-video');
-            const videoSrc = localStorage.getItem('videoSrc');
-            const repeat = localStorage.getItem('repeat') === 'true';
-
-            if (videoSrc) {
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(videoSrc);
+                hls.attachMedia(videoElement);
+            } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
                 videoElement.src = videoSrc;
             }
 
             videoElement.loop = repeat;
         };
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </body>
 </html>
