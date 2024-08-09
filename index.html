@@ -26,14 +26,14 @@
 <body>
     <div id="video-container">
         <video id="sleemtv-video" controls>
-            <source src="https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8" type="application/x-mpegURL">
+            <source src="https://stirred-officially-lemming.ngrok-free.app/hls/hls.m3u8" type="application/x-mpegURL">
             Your browser does not support the video tag.
         </video>
     </div>
     <script>
         window.onload = function() {
             const videoElement = document.getElementById('sleemtv-video');
-            const videoSrc = localStorage.getItem('videoSrc') || 'https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8';
+            const videoSrc = localStorage.getItem('videoSrc') || 'https://stirred-officially-lemming.ngrok-free.app/hls/hls.m3u8';
             const repeat = localStorage.getItem('repeat') === 'true';
 
             if (Hls.isSupported()) {
