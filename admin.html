@@ -94,4 +94,62 @@
 </body>
 </html>
 
+<body>
+    <div class="admin-container">
+        <form id="admin-form" onsubmit="return false;">
+            <div class="form-group">
+                <label for="admin-password">Password:</label>
+                <input type="password" id="admin-password" required>
+            </div>
+            <div class="form-group">
+                <label for="video-file">Select Video:</label>
+                <input type="file" id="video-file" accept="video/*">
+            </div>
+            <div class="form-group">
+                <label for="video-url">Or Enter Video URL:</label>
+                <input type="text" id="video-url" placeholder="https://example.com/video.m3u8">
+            </div>
+            <div class="form-group">
+                <label for="repeat-video">Repeat Video:</label>
+                <input type="checkbox" id="repeat-video">
+            </div>
+            <button type="submit">Play Video</button>
+        </form>
+    </div>
+
+    <script>
+        const correctPassword = 'Sleem6640!';
+
+        document.getElementById('admin-form').addEventListener('submit', function() {
+            const password = document.getElementById('admin-password').value;
+            const videoFile = document.getElementById('video-file').files[0];
+            const videoUrl = document.getElementById('video-url').value;
+            const repeat = document.getElementById('repeat-video').checked;
+
+            if (password !== correctPassword) {
+                alert('Incorrect password');
+                return;
+            }
+
+            if (videoFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const videoSrc = e.target.result;
+                    localStorage.setItem('videoSrc', videoSrc);
+                    localStorage.setItem('repeat', repeat);
+                    alert('Video updated');
+                };
+                reader.readAsDataURL(videoFile);
+            } else if (videoUrl) {
+                localStorage.setItem('videoSrc', videoUrl);
+                localStorage.setItem('repeat', repeat);
+                alert('Video URL updated');
+            } else {
+                alert('Please select a video file or enter a video URL.');
+            }
+        });
+    </script>
+</body>
+</html>
+
   
