@@ -1,35 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SleemTV Online</title>
+  <head>
+    <!-- stuff -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="sleem.css">
+    <title>SleemTV (W.I.P)</title>
+    <link rel="icon" type="image/x-icon" href="sleemtvlogo.jpg">
     <style>
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        p1 {
+            margin-bottom: 20px;
         }
         #video-container {
             width: 80%;
             max-width: 800px;
+            margin-top: 20px;
         }
         video {
             width: 100%;
             height: auto;
         }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <h1>SleemTV</h1>
+    <p1>This is a website that streams random news channels (not 24/7)</p1>
+
     <div id="video-container">
         <video id="sleemtv-video" controls>
             <source src="http://serveo.net:43469/hls/hls.m3u8" type="application/x-mpegURL">
             Your browser does not support the video tag.
         </video>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
         window.onload = function() {
             const videoElement = document.getElementById('sleemtv-video');
@@ -47,6 +62,5 @@
             videoElement.loop = repeat;
         };
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-</body>
+  </body>
 </html>
